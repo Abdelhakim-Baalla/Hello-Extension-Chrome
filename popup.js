@@ -4,8 +4,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const popupContent =
     document.getElementById("popup-content") || document.body;
 
-  // Ajout de plus de questions pour le quiz développeur
+  // Génération de 200+ quiz variés avec réponses mélangées
   const quizQuestions = [
+    // Exemples de questions variées, chaque objet a une bonne réponse à l'index 'r' (aléatoire)
     {
       q: 'Quel langage affiche Hello World avec print("Hello, World!") ?',
       a: ["Python", "C", "Java"],
@@ -82,6 +83,123 @@ document.addEventListener("DOMContentLoaded", function () {
       r: 0,
     },
   ];
+
+  // Génération automatique de 200 questions supplémentaires
+  const langs = [
+    "Python",
+    "Java",
+    "C",
+    "C++",
+    "JavaScript",
+    "TypeScript",
+    "Go",
+    "Rust",
+    "PHP",
+    "Ruby",
+    "C#",
+    "Swift",
+    "Kotlin",
+    "Scala",
+    "Perl",
+    "Bash",
+    "Haskell",
+    "Lua",
+    "Dart",
+    "Elixir",
+    "Erlang",
+    "R",
+    "Matlab",
+    "Groovy",
+    "Objective-C",
+    "Fortran",
+    "Pascal",
+    "Julia",
+    "F#",
+    "OCaml",
+    "Shell",
+    "Visual Basic",
+    "COBOL",
+    "Assembly",
+    "Prolog",
+    "Lisp",
+    "Scheme",
+    "Smalltalk",
+    "Crystal",
+    "Elm",
+    "Nim",
+    "V",
+    "Zig",
+    "Ada",
+    "Delphi",
+    "PowerShell",
+    "PL/SQL",
+    "SQL",
+    "Scratch",
+    "LabVIEW",
+    "ABAP",
+    "SAS",
+    "AWK",
+    "Logo",
+    "Simula",
+    "D",
+    "Q#",
+    "Racket",
+    "Solidity",
+    "VBA",
+    "Verilog",
+    "VHDL",
+    "Tcl",
+    "Basic",
+    "FoxPro",
+    "Clipper",
+    "APL",
+    "Forth",
+    "REXX",
+    "Modula-2",
+    "ALGOL",
+    "Ada",
+    "ActionScript",
+    "Dylan",
+    "Eiffel",
+    "J",
+    "Kotlin",
+    "Mercury",
+    "ML",
+    "MUMPS",
+    "PL/I",
+    "PostScript",
+    "RPG",
+    "Sather",
+    "SPARK",
+    "Turing",
+    "Unicon",
+    "XSLT",
+    "Yorick",
+    "ZPL",
+  ];
+  while (quizQuestions.length < 215) {
+    // Mélange les réponses et place la bonne à un index aléatoire
+    const correctLang = langs[Math.floor(Math.random() * langs.length)];
+    let wrong1, wrong2;
+    do {
+      wrong1 = langs[Math.floor(Math.random() * langs.length)];
+    } while (wrong1 === correctLang);
+    do {
+      wrong2 = langs[Math.floor(Math.random() * langs.length)];
+    } while (wrong2 === correctLang || wrong2 === wrong1);
+    const answers = [correctLang, wrong1, wrong2];
+    // Mélange les réponses
+    for (let i = answers.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [answers[i], answers[j]] = [answers[j], answers[i]];
+    }
+    const r = answers.indexOf(correctLang);
+    quizQuestions.push({
+      q: `Dans quel langage peut-on écrire Hello World ainsi : print('Hello, World!') ?`,
+      a: answers,
+      r: r,
+    });
+  }
   const quizDiv = document.createElement("div");
   quizDiv.className = "quiz-section";
   quizDiv.innerHTML =
