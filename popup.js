@@ -5,44 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const popupContent =
     document.getElementById("popup-content") || document.body;
 
-  // Création d'un conteneur pour les boutons
-  const container = document.createElement("div");
-  container.style.display = "flex";
-  container.style.flexWrap = "wrap";
-  container.style.gap = "8px";
-  container.style.margin = "10px 0";
-  popupContent.appendChild(container);
-
-  // Liste de couleurs prédéfinies (plus de choix)
-  const couleurs = [
-    { nom: "Bleu", code: "#2196f3" },
-    { nom: "Vert", code: "#4caf50" },
-    { nom: "Rouge", code: "#f44336" },
-    { nom: "Violet", code: "#9c27b0" },
-    { nom: "Orange", code: "#ff9800" },
-    { nom: "Rose", code: "#e91e63" },
-    { nom: "Jaune", code: "#ffeb3b" },
-    { nom: "Cyan", code: "#00bcd4" },
-    { nom: "Gris", code: "#607d8b" },
-    { nom: "Aléatoire", code: null },
-  ];
-
-  couleurs.forEach((couleur) => {
-    const btn = document.createElement("button");
-    btn.textContent = couleur.nom;
-    btn.style.background = couleur.code || "#eee";
-    btn.style.color = couleur.code && couleur.nom !== "Jaune" ? "#fff" : "#333";
-    btn.addEventListener("click", function () {
-      if (couleur.code) {
-        document.body.style.backgroundColor = couleur.code;
-      } else {
-        // Couleur aléatoire
-        const color = "#" + Math.floor(Math.random() * 16777215).toString(16);
-        document.body.style.backgroundColor = color;
-      }
-    });
-    container.appendChild(btn);
-  });
+  // Suppression du choix de couleurs, on garde uniquement le sélecteur de thème
 
   // Sélecteur de thème clair/sombre/pro
   const themeContainer = document.createElement("div");
@@ -70,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else if (select.value === "pro") {
       document.body.classList.add("theme-pro");
       document.body.style.background =
-        "linear-gradient(135deg, #2196f3 0%, #21cbf3 100%)";
+        "linear-gradient(135deg,rgb(44, 153, 242) 0%, #21cbf3 100%)";
       document.body.style.color = "#fff";
     } else {
       document.body.style.background = "";
@@ -96,4 +59,63 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   updateHeure();
   setInterval(updateHeure, 1000);
+
+  // Fonctionnalité créative 1 : Citation inspirante aléatoire
+  const citations = [
+    "Le succès n'est pas la clé du bonheur. Le bonheur est la clé du succès.",
+    "N'abandonne jamais, car c'est peut-être le moment où le vent va tourner.",
+    "La meilleure façon de prédire l'avenir est de le créer.",
+    "Chaque jour est une nouvelle chance de réussir.",
+    "Crois en toi et tout deviendra possible.",
+  ];
+  const citationDiv = document.createElement("div");
+  citationDiv.style.marginTop = "18px";
+  citationDiv.style.fontStyle = "italic";
+  citationDiv.style.textAlign = "center";
+  citationDiv.style.opacity = "0.85";
+  function afficherCitation() {
+    const idx = Math.floor(Math.random() * citations.length);
+    citationDiv.textContent = "💡 " + citations[idx];
+  }
+  afficherCitation();
+  popupContent.appendChild(citationDiv);
+
+  // Fonctionnalité créative 2 : Compteur de clics sur le logo
+  const logo = document.querySelector("h1 img");
+  let clickCount = 0;
+  if (logo) {
+    logo.style.cursor = "pointer";
+    logo.title = "Cliquez-moi !";
+    logo.addEventListener("click", function () {
+      clickCount++;
+      logo.style.transform = `scale(${1 + clickCount * 0.05}) rotate(${
+        clickCount * 10
+      }deg)`;
+      setTimeout(() => {
+        logo.style.transform = "";
+      }, 400);
+      if (clickCount % 3 === 0) {
+        afficherCitation();
+      }
+    });
+  }
+
+  // Fonctionnalité créative 3 : Affichage du jour de la semaine
+  const jours = [
+    "Dimanche",
+    "Lundi",
+    "Mardi",
+    "Mercredi",
+    "Jeudi",
+    "Vendredi",
+    "Samedi",
+  ];
+  const jourDiv = document.createElement("div");
+  jourDiv.style.marginTop = "8px";
+  jourDiv.style.textAlign = "center";
+  jourDiv.style.fontSize = "0.95em";
+  jourDiv.style.color = "#2196f3";
+  const now = new Date();
+  jourDiv.textContent = `Aujourd'hui : ${jours[now.getDay()]}`;
+  popupContent.appendChild(jourDiv);
 });
