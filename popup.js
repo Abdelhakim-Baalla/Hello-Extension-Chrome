@@ -118,4 +118,111 @@ document.addEventListener("DOMContentLoaded", function () {
   const now = new Date();
   jourDiv.textContent = `Aujourd'hui : ${jours[now.getDay()]}`;
   popupContent.appendChild(jourDiv);
+
+  // Fonctionnalité créative 4 : Mode "Focus" (cache tout sauf l'heure et le thème)
+  const focusBtn = document.createElement("button");
+  focusBtn.textContent = "Mode Focus";
+  focusBtn.style.margin = "16px auto 0 auto";
+  focusBtn.style.display = "block";
+  let focusMode = false;
+  focusBtn.addEventListener("click", function () {
+    focusMode = !focusMode;
+    if (focusMode) {
+      citationDiv.style.display = "none";
+      jourDiv.style.display = "none";
+      focusBtn.textContent = "Quitter le mode Focus";
+    } else {
+      citationDiv.style.display = "";
+      jourDiv.style.display = "";
+      focusBtn.textContent = "Mode Focus";
+    }
+  });
+  popupContent.appendChild(focusBtn);
+
+  // Fonctionnalité créative 5 : Affichage météo (API Open-Meteo, sans clé)
+  const meteoDiv = document.createElement("div");
+  meteoDiv.style.marginTop = "14px";
+  meteoDiv.style.textAlign = "center";
+  meteoDiv.style.fontSize = "0.95em";
+  meteoDiv.textContent = "Chargement météo...";
+  popupContent.appendChild(meteoDiv);
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      function (pos) {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
+        )
+          .then((r) => r.json())
+          .then((data) => {
+            if (data.current_weather) {
+              meteoDiv.textContent = `🌡️ ${
+                data.current_weather.temperature
+              }°C, ${
+                data.current_weather.weathercode < 3 ? "Ensoleillé" : "Nuageux"
+              }`;
+            } else {
+              meteoDiv.textContent = "Météo indisponible";
+            }
+          })
+          .catch(() => (meteoDiv.textContent = "Erreur météo"));
+      },
+      () => (meteoDiv.textContent = "Météo non autorisée")
+    );
+  } else {
+    meteoDiv.textContent = "Météo non supportée";
+  }
+
+  // Fonctionnalité créative 6 : Générateur de TODO rapide
+  const todoDiv = document.createElement("div");
+  todoDiv.style.marginTop = "18px";
+  todoDiv.style.textAlign = "center";
+  todoDiv.innerHTML =
+    '<input type="text" id="todo-input" placeholder="Ajouter une tâche..." style="padding:4px 8px;border-radius:6px;border:1px solid #2196f3;"> <button id="add-todo" style="padding:4px 10px;border-radius:6px;background:#2196f3;color:#fff;border:none;">Ajouter</button><ul id="todo-list" style="list-style:none;padding:0;margin:8px 0 0 0;text-align:left;"></ul>';
+  popupContent.appendChild(todoDiv);
+  const todoInput = todoDiv.querySelector("#todo-input");
+  const addTodoBtn = todoDiv.querySelector("#add-todo");
+  const todoList = todoDiv.querySelector("#todo-list");
+  addTodoBtn.addEventListener("click", function () {
+    if (todoInput.value.trim()) {
+      const li = document.createElement("li");
+      li.textContent = todoInput.value;
+      li.style.background = "#e3f0ff";
+      li.style.margin = "2px 0";
+      li.style.padding = "3px 8px";
+      li.style.borderRadius = "5px";
+      li.style.display = "flex";
+      li.style.justifyContent = "space-between";
+      const del = document.createElement("span");
+      del.textContent = "✖";
+      del.style.cursor = "pointer";
+      del.style.marginLeft = "8px";
+      del.style.color = "#f44336";
+      del.addEventListener("click", () => li.remove());
+      li.appendChild(del);
+      todoList.appendChild(li);
+      todoInput.value = "";
+    }
+  });
+  todoInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") addTodoBtn.click();
+  });
+
+  // Fonctionnalité créative 7 : Affichage d'une blague aléatoire (API Joke)
+  const jokeDiv = document.createElement("div");
+  jokeDiv.style.marginTop = "18px";
+  jokeDiv.style.textAlign = "center";
+  jokeDiv.style.fontSize = "0.95em";
+  jokeDiv.textContent = "Blague du jour...";
+  popupContent.appendChild(jokeDiv);
+  fetch(
+    "https://v2.jokeapi.dev/joke/Any?lang=fr&blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single"
+  )
+    .then((r) => r.json())
+    .then((data) => {
+      if (data.joke) jokeDiv.textContent = "😂 " + data.joke;
+      else jokeDiv.textContent = "Pas de blague aujourd'hui.";
+    })
+    .catch(() => (jokeDiv.textContent = "Erreur blague."));
 });
