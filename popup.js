@@ -1,13 +1,9 @@
 console.log("This is a popup!");
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Utilisation du conteneur pour le contenu dynamique
   const popupContent =
     document.getElementById("popup-content") || document.body;
 
-  // Suppression du choix de couleurs, on garde uniquement le sélecteur de thème
-
-  // Sélecteur de thème clair/sombre/pro
   const themeContainer = document.createElement("div");
   themeContainer.style.margin = "15px 0 0 0";
   themeContainer.style.display = "flex";
@@ -44,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
   themeContainer.appendChild(select);
   popupContent.appendChild(themeContainer);
 
-  // Affichage de l'heure actuelle
   const heure = document.createElement("div");
   heure.id = "heure-actuelle";
   heure.style.marginTop = "18px";
@@ -60,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
   updateHeure();
   setInterval(updateHeure, 1000);
 
-  // Fonctionnalité créative 1 : Citation inspirante aléatoire
   const citations = [
     "Le succès n'est pas la clé du bonheur. Le bonheur est la clé du succès.",
     "N'abandonne jamais, car c'est peut-être le moment où le vent va tourner.",
@@ -80,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
   afficherCitation();
   popupContent.appendChild(citationDiv);
 
-  // Fonctionnalité créative 2 : Compteur de clics sur le logo
   const logo = document.querySelector("h1 img");
   let clickCount = 0;
   if (logo) {
@@ -100,7 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Fonctionnalité créative 3 : Affichage du jour de la semaine
   const jours = [
     "Dimanche",
     "Lundi",
@@ -119,7 +111,6 @@ document.addEventListener("DOMContentLoaded", function () {
   jourDiv.textContent = `Aujourd'hui : ${jours[now.getDay()]}`;
   popupContent.appendChild(jourDiv);
 
-  // Fonctionnalité créative 4 : Mode "Focus" (cache tout sauf l'heure et le thème)
   const focusBtn = document.createElement("button");
   focusBtn.textContent = "Mode Focus";
   focusBtn.style.margin = "16px auto 0 auto";
@@ -139,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   popupContent.appendChild(focusBtn);
 
-  // Fonctionnalité créative 5 : Affichage météo (API Open-Meteo, sans clé)
   const meteoDiv = document.createElement("div");
   meteoDiv.style.marginTop = "14px";
   meteoDiv.style.textAlign = "center";
@@ -174,7 +164,6 @@ document.addEventListener("DOMContentLoaded", function () {
     meteoDiv.textContent = "Météo non supportée";
   }
 
-  // Fonctionnalité créative 6 : Générateur de TODO rapide
   const todoDiv = document.createElement("div");
   todoDiv.style.marginTop = "18px";
   todoDiv.style.textAlign = "center";
@@ -209,7 +198,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.key === "Enter") addTodoBtn.click();
   });
 
-  // Fonctionnalité créative 7 : Affichage d'une blague aléatoire (API Joke)
   const jokeDiv = document.createElement("div");
   jokeDiv.style.marginTop = "18px";
   jokeDiv.style.textAlign = "center";
@@ -225,4 +213,36 @@ document.addEventListener("DOMContentLoaded", function () {
       else jokeDiv.textContent = "Pas de blague aujourd'hui.";
     })
     .catch(() => (jokeDiv.textContent = "Erreur blague."));
+
+  // Organisation et stylisation des éléments avec des classes CSS
+  themeContainer.className = "theme-row";
+  heure.className = "heure";
+  citationDiv.className = "citation";
+  jourDiv.className = "jour";
+  focusBtn.className = "focus-btn";
+  meteoDiv.className = "meteo";
+  todoDiv.className = "todo-section";
+  jokeDiv.className = "joke";
+
+  // Suppression des styles inline inutiles (sauf pour les éléments dynamiques du todo)
+  heure.style = "";
+  citationDiv.style = "";
+  jourDiv.style = "";
+  focusBtn.style = "";
+  meteoDiv.style = "";
+  todoDiv.style = "";
+  jokeDiv.style = "";
+
+  // Pour les éléments dynamiques du todo, on garde le style pour la suppression
+  todoList.className = "todo-list";
+  todoInput.className = "todo-input";
+  addTodoBtn.className = "add-todo-btn";
+  todoInput.style.padding = "4px 8px";
+  todoInput.style.borderRadius = "6px";
+  todoInput.style.border = "1px solid #2196f3";
+  addTodoBtn.style.padding = "4px 10px";
+  addTodoBtn.style.borderRadius = "6px";
+  addTodoBtn.style.background = "#2196f3";
+  addTodoBtn.style.color = "#fff";
+  addTodoBtn.style.border = "none";
 });
