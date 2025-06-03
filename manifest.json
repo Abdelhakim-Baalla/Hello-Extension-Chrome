@@ -1,8 +1,8 @@
 {
   "name": "Hello World Dev Quiz",
   "short_name": "HW Dev Quiz",
-  "description": "Quiz interactif Chrome pour développeurs : testez vos connaissances sur les syntaxes Hello World dans plus de 100 langages. Fun, rapide, éducatif et responsive.",
-  "version": "1.3",
+  "description": "Quiz interactif Chrome pour développeurs : testez vos connaissances sur les syntaxes Hello World dans plus de 100 langages. Fun, rapide, éducatif, responsive et open-source.",
+  "version": "1.4",
   "manifest_version": 3,
   "action": {
     "default_popup": "hello.html",
@@ -21,8 +21,24 @@
   },
   "author": "Abdelhakim Baalla",
   "homepage_url": "https://github.com/Abdelhakim-Baalla/Hello-Extension-Chrome",
-  "keywords": ["hello world", "quiz", "développeur", "programmation", "langages", "chrome extension", "dev", "fun", "éducatif", "test", "syntaxe"],
-  "categories": ["Productivité", "Développement", "Éducation", "Quiz", "Programmation"],
+  "keywords": [
+    "hello world", "quiz", "développeur", "programmation", "langages", "chrome extension", "dev", "fun", "éducatif", "test", "syntaxe", "open-source", "challenge", "code", "learning", "javascript", "python", "java", "c", "typescript", "rust", "php", "ruby", "swift", "kotlin", "go", "c#", "scala", "bash", "linux", "windows", "macos", "cloud", "web", "apprentissage", "challenge dev", "culture dev"
+  ],
+  "categories": [
+    "Productivité", "Développement", "Éducation", "Quiz", "Programmation", "Open Source", "Jeux", "Apprentissage"
+  ],
   "permissions": [],
-  "offline_enabled": true
+  "offline_enabled": true,
+  "default_locale": "fr",
+  "support_url": "https://github.com/Abdelhakim-Baalla/Hello-Extension-Chrome/issues",
+  "minimum_chrome_version": "100",
+  "background": {
+    "service_worker": "popup.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["hello_extensions.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }
