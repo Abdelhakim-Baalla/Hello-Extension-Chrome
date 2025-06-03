@@ -4,9 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const popupContent =
     document.getElementById("popup-content") || document.body;
 
-  // Génération de 200+ quiz variés avec réponses mélangées
+  // Génération de 200+ quiz variés avec réponses mélangées (bonne réponse à une position aléatoire)
   const quizQuestions = [
     // Exemples de questions variées, chaque objet a une bonne réponse à l'index 'r' (aléatoire)
+    // Les réponses sont mélangées à la volée pour chaque question lors de l'affichage
     {
       q: 'Quel langage affiche Hello World avec print("Hello, World!") ?',
       a: ["Python", "C", "Java"],
@@ -84,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
     },
   ];
 
-  // Génération automatique de 200 questions supplémentaires
+  // Génération automatique de 300 questions supplémentaires variées
   const langs = [
     "Python",
     "Java",
@@ -177,8 +178,8 @@ document.addEventListener("DOMContentLoaded", function () {
     "Yorick",
     "ZPL",
   ];
-  while (quizQuestions.length < 215) {
-    // Mélange les réponses et place la bonne à un index aléatoire
+  while (quizQuestions.length < 320) {
+    // Génère une question aléatoire sur Hello World
     const correctLang = langs[Math.floor(Math.random() * langs.length)];
     let wrong1, wrong2;
     do {
@@ -187,8 +188,8 @@ document.addEventListener("DOMContentLoaded", function () {
     do {
       wrong2 = langs[Math.floor(Math.random() * langs.length)];
     } while (wrong2 === correctLang || wrong2 === wrong1);
+    // Place la bonne réponse à une position aléatoire
     const answers = [correctLang, wrong1, wrong2];
-    // Mélange les réponses
     for (let i = answers.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [answers[i], answers[j]] = [answers[j], answers[i]];
@@ -200,6 +201,8 @@ document.addEventListener("DOMContentLoaded", function () {
       r: r,
     });
   }
+
+  // Affichage du quiz avec mélange dynamique des réponses à chaque question
   const quizDiv = document.createElement("div");
   quizDiv.className = "quiz-section";
   quizDiv.innerHTML =
@@ -210,13 +213,19 @@ document.addEventListener("DOMContentLoaded", function () {
   answersDiv.className = "quiz-answers";
   function showQuiz() {
     const q = quizQuestions[quizIndex];
+    // Mélange dynamique des réponses à chaque affichage
+    const answerObjs = q.a.map((ans, i) => ({ ans, isCorrect: i === q.r }));
+    for (let i = answerObjs.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [answerObjs[i], answerObjs[j]] = [answerObjs[j], answerObjs[i]];
+    }
     questionSpan.textContent = q.q;
     answersDiv.innerHTML = "";
-    q.a.forEach((ans, i) => {
+    answerObjs.forEach((obj) => {
       const btn = document.createElement("button");
-      btn.textContent = ans;
+      btn.textContent = obj.ans;
       btn.onclick = () => {
-        if (i === q.r) {
+        if (obj.isCorrect) {
           btn.style.background = "#4caf50";
           btn.textContent += " ✔";
         } else {

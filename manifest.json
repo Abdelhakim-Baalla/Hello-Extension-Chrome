@@ -1,7 +1,8 @@
 {
   "name": "Hello World Dev Quiz",
-  "description": "Extension Chrome fun pour développeurs : quiz interactif sur les syntaxes Hello World dans différents langages.",
-  "version": "1.2",
+  "short_name": "HW Dev Quiz",
+  "description": "Quiz interactif Chrome pour développeurs : testez vos connaissances sur les syntaxes Hello World dans plus de 100 langages. Fun, rapide, éducatif et responsive.",
+  "version": "1.3",
   "manifest_version": 3,
   "action": {
     "default_popup": "hello.html",
@@ -17,5 +18,11 @@
     "32": "hello_extensions.png",
     "48": "hello_extensions.png",
     "128": "hello_extensions.png"
-  }
+  },
+  "author": "Abdelhakim Baalla",
+  "homepage_url": "https://github.com/Abdelhakim-Baalla/Hello-Extension-Chrome",
+  "keywords": ["hello world", "quiz", "développeur", "programmation", "langages", "chrome extension", "dev", "fun", "éducatif", "test", "syntaxe"],
+  "categories": ["Productivité", "Développement", "Éducation", "Quiz", "Programmation"],
+  "permissions": [],
+  "offline_enabled": true
 }
