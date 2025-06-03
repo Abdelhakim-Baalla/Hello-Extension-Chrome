@@ -1,7 +1,7 @@
 {
-  "name": "Hello Extensions",
-  "description": "Extension Chrome moderne et créative avec thèmes personnalisés et design professionnel.",
-  "version": "1.1",
+  "name": "Hello World Dev Quiz",
+  "description": "Extension Chrome fun pour développeurs : quiz interactif sur les syntaxes Hello World dans différents langages.",
+  "version": "1.2",
   "manifest_version": 3,
   "action": {
     "default_popup": "hello.html",
