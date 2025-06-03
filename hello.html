@@ -1,38 +1,165 @@
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello Extensions</title>
-    <link rel="stylesheet" href="popup.css" />
-    <style>
-      body {
-        background: linear-gradient(135deg, #e3f0ff 0%, #f9f9f9 100%);
-        box-shadow: 0 4px 24px rgba(33, 150, 243, 0.08);
-        border-radius: 16px;
-        margin: 0;
-        min-width: 300px;
-        min-height: 220px;
-        transition: background 0.3s, color 0.3s;
-      }
-      h1 {
-        font-family: "Segoe UI", Arial, sans-serif;
-        font-size: 1.5em;
-        color: #2196f3;
-        margin-bottom: 10px;
-        letter-spacing: 1px;
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>
-      <img
-        src="hello_extensions.png"
-        alt="Hi"
-        style="height: 32px; vertical-align: middle; margin-right: 8px"
-      />Hello World
-    </h1>
-    <div id="popup-content"></div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeMaster Quiz</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bubble bubble-1"></div>
+        <div class="bubble bubble-2"></div>
+        <div class="bubble bubble-3"></div>
+        <div class="bubble bubble-4"></div>
+        <div class="bubble bubble-5"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="app-container">
+        
+        <!-- Header Section -->
+        <header class="app-header">
+            <div class="logo-container">
+                <div class="logo">
+                    <span class="logo-icon"><img src="hello_extensions.png" alt="Hello" class="logo-img"></span>
+                </div>
+                <div class="brand-info">
+                    <h1 class="app-title">Hello World Quiz</h1>
+                    <p class="app-subtitle">Quiz Développement</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-label">Niveau</span>
+                    <span class="stat-value" id="level">Débutant</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">
+                <span id="questionNumber">1</span> / <span id="totalQuestions">15</span>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <main class="quiz-main">
+            
+            <!-- Question Card -->
+            <div class="question-card">
+                <div class="question-header">
+                    <div class="difficulty-badge" id="difficulty">
+                        <span class="difficulty-icon">🎯</span>
+                        <span class="difficulty-text">Facile</span>
+                    </div>
+                    <div class="category-tag" id="category">Langage</div>
+                </div>
+                
+                <div class="question-content">
+                    <h2 class="question-text" id="questionText">
+                        Chargement de la question...
+                    </h2>
+                </div>
+            </div>
+
+            <!-- Answers Section -->
+            <div class="answers-container" id="answersContainer">
+                <!-- Les réponses seront générées dynamiquement -->
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" id="hintBtn">
+                    <span class="btn-icon">💡</span>
+                    Indice
+                </button>
+                <button class="btn btn-primary" id="nextBtn" disabled>
+                    <span class="btn-text">Suivant</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </div>
+
+        </main>
+
+        <!-- Score Panel -->
+        <footer class="score-panel">
+            <div class="score-item">
+                <div class="score-icon">🏆</div>
+                <div class="score-info">
+                    <span class="score-label">Score</span>
+                    <span class="score-value" id="currentScore">0</span>
+                </div>
+            </div>
+            
+            <div class="score-item">
+                <div class="score-icon">🔥</div>
+                <div class="score-info">
+                    <span class="score-label">Série</span>
+                    <span class="score-value" id="streak">0</span>
+                </div>
+            </div>
+            
+            <div class="score-item">
+                <div class="score-icon">⚡</div>
+                <div class="score-info">
+                    <span class="score-label">XP</span>
+                    <span class="score-value" id="experience">0</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Success/Error Feedback -->
+    <div class="feedback-overlay" id="feedbackOverlay">
+        <div class="feedback-content">
+            <div class="feedback-icon" id="feedbackIcon">✅</div>
+            <div class="feedback-text" id="feedbackText">Bonne réponse !</div>
+        </div>
+    </div>
+
+    <!-- Final Results Modal -->
+    <div class="modal-overlay" id="resultsModal">
+        <div class="modal-content">
+            <div class="results-header">
+                <div class="results-trophy">🏆</div>
+                <h2 class="results-title">Quiz Terminé !</h2>
+            </div>
+            
+            <div class="results-stats">
+                <div class="result-stat">
+                    <div class="result-number" id="finalScore">0</div>
+                    <div class="result-label">Score Final</div>
+                </div>
+                <div class="result-stat">
+                    <div class="result-number" id="correctAnswers">0</div>
+                    <div class="result-label">Bonnes Réponses</div>
+                </div>
+                <div class="result-stat">
+                    <div class="result-number" id="accuracy">0%</div>
+                    <div class="result-label">Précision</div>
+                </div>
+            </div>
+
+            <div class="results-actions">
+                <button class="btn btn-outline" id="shareBtn">
+                    <span class="btn-icon">📤</span>
+                    Partager
+                </button>
+                <button class="btn btn-primary" id="restartBtn">
+                    <span class="btn-icon">🔄</span>
+                    Recommencer
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="popup.js"></script>
-  </body>
+</body>
 </html>
